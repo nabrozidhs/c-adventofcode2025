@@ -53,3 +53,8 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+CMakeLists.txt
+days.c
+main
+.idea/
