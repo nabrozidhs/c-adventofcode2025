@@ -103,7 +103,7 @@ static inline DayInputNextU64 day_input_read_next_u64(DayInput *input)
     if (result.is_valid)
     {
         U64 size = (input->position - start_position);
-        String8 string = string8_from_cstr((input->content + start_position), size);
+        String8 string = string8_from_c_string((input->content + start_position), size);
         result.string = string;
     }
 
