@@ -65,11 +65,46 @@ static inline DayInputNextI64 day_input_read_next_i64(DayInput *input)
     if (is_digit(input->content[input->position]))
     {
         result.is_valid = true;
+        // TODO handle '-' sign
         while ((input->position < input->size) && is_digit(input->content[input->position]))
         {
             result.value = result.value * 10 + (input->content[input->position] - '0');
             ++input->position;
         }
+    }
+
+    return result;
+}
+
+typedef struct
+{
+    U64 value;
+    B32 is_valid;
+    String8 string;
+} DayInputNextU64;
+
+static inline DayInputNextU64 day_input_read_next_u64(DayInput *input)
+{
+    DayInputNextU64 result = {0};
+
+    day_input_skip_whitespace(input);
+
+    U64 start_position = input->position;
+    if (is_digit(input->content[input->position]))
+    {
+        result.is_valid = true;
+        while ((input->position < input->size) && is_digit(input->content[input->position]))
+        {
+            result.value = result.value * 10 + (input->content[input->position] - '0');
+            ++input->position;
+        }
+    }
+
+    if (result.is_valid)
+    {
+        U64 size = (input->position - start_position);
+        String8 string = string8_from_cstr((input->content + start_position), size);
+        result.string = string;
     }
 
     return result;
