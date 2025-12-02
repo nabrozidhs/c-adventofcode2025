@@ -1,5 +1,3 @@
-#include "common/common.h"
-
 void day01_part1(DAY_ARGS)
 {
     U64 count = 0;
