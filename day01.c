@@ -1,4 +1,4 @@
-void day01_part1(DAY_ARGS)
+internal void day01_part1(DAY_ARGS)
 {
     U64 count = 0;
     I64 dial = 50;
@@ -28,7 +28,7 @@ void day01_part1(DAY_ARGS)
     printf("Part 1: %lu\n", count);
 }
 
-void day01_part2(DAY_ARGS)
+internal void day01_part2(DAY_ARGS)
 {
     U64 count = 0;
     I64 dial = 50;

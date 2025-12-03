@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#define internal static
+
 #include <assert.h>
 #include <stdalign.h>
 #include <stddef.h>
@@ -9,6 +11,7 @@
 #include <stdlib.h>
 
 typedef uint8_t U8;
+typedef uint32_t U32;
 typedef uint64_t U64;
 
 typedef int64_t I64;

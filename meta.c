@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-const int MAX_DAY = 2;
+const int MAX_DAY = 3;
 
 int main()
 {

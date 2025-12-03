@@ -130,4 +130,31 @@ static inline DayInputNextU8 day_input_read_next_char(DayInput *input)
     return result;
 }
 
+typedef struct {
+    String8 line;
+    B32 is_valid;
+} DayInputNextLine;
+
+static inline DayInputNextLine day_input_read_next_line(DayInput *input)
+{
+    DayInputNextLine result = {0};
+
+    U64 start_position = input->position;
+    while (input->position < input->size && input->content[input->position] != '\n')
+    {
+        result.is_valid = true;
+        ++input->position;
+    }
+
+    if (result.is_valid)
+    {
+        result.line = string8_from_c_string((input->content + start_position), (input->position - start_position));
+        if (input->position < input->size)
+        {
+            ++input->position;
+        }
+    }
+
+    return result;
+}
 #endif

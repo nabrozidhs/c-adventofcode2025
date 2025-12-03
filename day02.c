@@ -1,6 +1,4 @@
-#include "common/common.h"
-
-B32 is_invalid_id(U64 id, U64 id_length, U64 sequence_size)
+internal B32 is_invalid_id(U64 id, U64 id_length, U64 sequence_size)
 {
     assert(id_length % sequence_size == 0);
     U64 base = common_powi_u64(10, sequence_size);
@@ -16,7 +14,7 @@ B32 is_invalid_id(U64 id, U64 id_length, U64 sequence_size)
     return true;
 }
 
-B32 is_invalid_id_part1(U64 id)
+internal B32 is_invalid_id_part1(U64 id)
 {
     U64 length = common_log10_u64(id);
     if (length % 2 == 1)
@@ -26,7 +24,7 @@ B32 is_invalid_id_part1(U64 id)
     return is_invalid_id(id, length, length / 2);
 }
 
-U64 day02_common(DayInput *day_input, B32 (* f) (U64))
+internal U64 day02_common(DayInput *day_input, B32 (* f) (U64))
 {
     U64 sum = 0;
 
@@ -57,13 +55,13 @@ U64 day02_common(DayInput *day_input, B32 (* f) (U64))
     return sum;
 }
 
-void day02_part1(DAY_ARGS)
+internal void day02_part1(DAY_ARGS)
 {
     U64 sum = day02_common(day_input, is_invalid_id_part1);
     printf("Part 1: %lu\n", sum);
 }
 
-B32 is_invalid_id_part2(U64 id)
+internal B32 is_invalid_id_part2(U64 id)
 {
     U64 length = common_log10_u64(id);
     for (int sequence_size = 1; sequence_size <= length / 2; ++sequence_size)
@@ -77,7 +75,7 @@ B32 is_invalid_id_part2(U64 id)
     return false;
 }
 
-void day02_part2(DAY_ARGS)
+internal void day02_part2(DAY_ARGS)
 {
     U64 sum = day02_common(day_input, is_invalid_id_part2);
     printf("Part 2: %lu\n", sum);
