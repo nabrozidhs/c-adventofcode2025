@@ -14,6 +14,7 @@ typedef uint8_t U8;
 typedef uint32_t U32;
 typedef uint64_t U64;
 
+typedef int32_t I32;
 typedef int64_t I64;
 
 typedef uint32_t B32;
@@ -21,6 +22,9 @@ typedef uint32_t B32;
 #define KILOBYTE(n) (n * 1024)
 #define MEGABYTE(n) (KILOBYTE(n) * 1024)
 
+#define MAXIMUM(a, b) ((a) > (b) ? (a) : (b))
+
+#include "vector.h"
 #include "string.h"
 #include "memory_arena.h"
 #include "day_input.h"
@@ -74,6 +78,11 @@ static inline U64 common_powi_u64(U64 x, U64 y)
 static inline int common_memcmp(void *left, void *right, U64 n)
 {
     return __builtin_memcmp(left, right, n);
+}
+
+static inline void *common_memcpy(void *dest, void *src, U64 n)
+{
+    return __builtin_memcpy(dest, src, n);
 }
 
 #endif
