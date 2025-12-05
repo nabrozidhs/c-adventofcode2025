@@ -58,7 +58,7 @@ internal U64 day02_common(DayInput *day_input, B32 (* f) (U64))
 internal void day02_part1(DAY_ARGS)
 {
     U64 sum = day02_common(day_input, is_invalid_id_part1);
-    printf("Part 1: %lu\n", sum);
+    printf("Part 1: %llu\n", sum);
 }
 
 internal B32 is_invalid_id_part2(U64 id)
@@ -78,7 +78,7 @@ internal B32 is_invalid_id_part2(U64 id)
 internal void day02_part2(DAY_ARGS)
 {
     U64 sum = day02_common(day_input, is_invalid_id_part2);
-    printf("Part 2: %lu\n", sum);
+    printf("Part 2: %llu\n", sum);
 }
 
 void day02(DAY_ARGS)

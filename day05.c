@@ -56,7 +56,7 @@ internal void day05_part1(DAY_ARGS)
             ++sum;
         }
     }
-    printf("Part 1: %lu\n", sum);
+    printf("Part 1: %llu\n", sum);
 }
 
 int sort_by_start(const void *a, const void *b)
@@ -94,7 +94,7 @@ internal void day05_part2(DAY_ARGS)
         previous_end = range->end;
     }
 
-    printf("Part 2: %lu\n", sum);
+    printf("Part 2: %llu\n", sum);
 }
 
 void day05(DAY_ARGS)

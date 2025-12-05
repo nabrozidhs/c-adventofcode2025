@@ -4,6 +4,7 @@
 #define internal static
 
 #include <assert.h>
+#include <stdbool.h>
 #include <stdalign.h>
 #include <stddef.h>
 #include <stdint.h>

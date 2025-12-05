@@ -2,7 +2,7 @@
 
 const int MAX_DAY = 5;
 
-int main()
+int main(int argc, char **argv)
 {
     FILE* f = fopen("days.c", "w");
     if (f == NULL)

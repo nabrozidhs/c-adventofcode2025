@@ -59,13 +59,13 @@ internal U64 day03_common(DayInput *day_input, U32 n)
 internal void day03_part1(DAY_ARGS)
 {
     U64 sum = day03_common(day_input, 2);
-    printf("Part 1: %lu\n", sum);
+    printf("Part 1: %llu\n", sum);
 }
 
 internal void day03_part2(DAY_ARGS)
 {
     U64 sum = day03_common(day_input, 12);
-    printf("Part 2: %lu\n", sum);
+    printf("Part 2: %llu\n", sum);
 }
 
 void day03(DAY_ARGS)

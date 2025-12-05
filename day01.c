@@ -25,7 +25,7 @@ internal void day01_part1(DAY_ARGS)
         next_char = day_input_read_next_char(day_input);
     }
 
-    printf("Part 1: %lu\n", count);
+    printf("Part 1: %llu\n", count);
 }
 
 internal void day01_part2(DAY_ARGS)
@@ -54,7 +54,7 @@ internal void day01_part2(DAY_ARGS)
         next_char = day_input_read_next_char(day_input);
     }
 
-    printf("Part 2: %lu\n", count);
+    printf("Part 2: %llu\n", count);
 }
 
 void day01(DAY_ARGS)

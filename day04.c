@@ -88,7 +88,7 @@ internal void day04_part1(Day04_Find_Map_Size *map)
         }
     }
 
-    printf("Part 1: %lu\n", sum);
+    printf("Part 1: %llu\n", sum);
 }
 
 internal void day04_part2(Day04_Find_Map_Size *map)
@@ -122,7 +122,7 @@ internal void day04_part2(Day04_Find_Map_Size *map)
         }
     }
 
-    printf("Part 2: %lu\n", removed);
+    printf("Part 2: %llu\n", removed);
 }
 
 void day04(DAY_ARGS)
