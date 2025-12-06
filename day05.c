@@ -1,5 +1,3 @@
-#include "common/common.h"
-
 typedef struct {
     U64 start;
     U64 end;
