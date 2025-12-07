@@ -8,7 +8,6 @@ internal Day04_Find_Map_Size day04_find_map_size(MemoryArena *arena, DayInput *d
     Day04_Find_Map_Size result = {0};
 
     result.content = memory_arena_push_array(arena, U8, day_input->size);
-    U64 i = 0;
     for (;;)
     {
         DayInputNextLine next_line = day_input_read_next_line(day_input);
@@ -17,11 +16,10 @@ internal Day04_Find_Map_Size day04_find_map_size(MemoryArena *arena, DayInput *d
             break;
         }
 
-        common_memcpy(result.content + i * result.size.x, next_line.line.data, next_line.line.size);
+        common_memcpy(result.content + result.size.y * result.size.x, next_line.line.data, next_line.line.size);
 
         result.size.x = MAXIMUM(result.size.x, next_line.line.size);
         ++result.size.y;
-        ++i;
     }
 
     return result;

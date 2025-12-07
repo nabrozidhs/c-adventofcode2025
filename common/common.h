@@ -20,8 +20,8 @@ typedef int64_t I64;
 
 typedef uint32_t B32;
 
-#define KILOBYTE(n) (n * 1024)
-#define MEGABYTE(n) (KILOBYTE(n) * 1024)
+#define KILOBYTE(n) (n * 1024L)
+#define MEGABYTE(n) (KILOBYTE(n) * 1024L)
 
 #define MAXIMUM(a, b) ((a) > (b) ? (a) : (b))
 
