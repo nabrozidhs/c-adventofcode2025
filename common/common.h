@@ -94,12 +94,6 @@ static inline F32 common_powi_f32(F32 x, U64 y)
     return result;
 }
 
-static inline F32 common_sqrt_f32(F32 value)
-{
-    F32 result = (F32)__builtin_sqrt(value);
-    return result;
-}
-
 static inline int common_memcmp(void *left, void *right, U64 n)
 {
     return __builtin_memcmp(left, right, n);

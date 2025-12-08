@@ -76,7 +76,7 @@ internal Buffer *day08_initialise_position_indices_and_distances(MemoryArena *ar
             Day08_Position_Indices_And_Distance element = {0};
             element.position_index_1 = i;
             element.position_index_2 = j;
-            element.distance = vector3i_euclidian_distance(vector_1, buffer_get(positions, Vector3i, j));
+            element.distance = vector3i_euclidian_distance_squared(vector_1, buffer_get(positions, Vector3i, j));
             buffer_add(position_indices_and_distance, Day08_Position_Indices_And_Distance, element);
         }
     }
