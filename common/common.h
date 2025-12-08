@@ -15,8 +15,21 @@ typedef uint8_t U8;
 typedef uint32_t U32;
 typedef uint64_t U64;
 
+_Static_assert(sizeof(U8) == 1, "U8 must be 1 byte");
+_Static_assert(sizeof(U32) == 4, "U32 must be 4 bytes");
+_Static_assert(sizeof(U64) == 8, "U64 must be 8 bytes");
+
 typedef int32_t I32;
 typedef int64_t I64;
+
+_Static_assert(sizeof(I32) == 4, "I32 must be 4 bytes");
+_Static_assert(sizeof(I64) == 8, "I64 must be 8 bytes");
+
+typedef float F32;
+typedef double F64;
+
+_Static_assert(sizeof(F32) == 4, "F32 must be 4 bytes");
+_Static_assert(sizeof(F64) == 8, "F64 must be 8 bytes");
 
 typedef uint32_t B32;
 
@@ -25,7 +38,6 @@ typedef uint32_t B32;
 
 #define MAXIMUM(a, b) ((a) > (b) ? (a) : (b))
 
-#include "vector.h"
 #include "string.h"
 #include "memory_arena.h"
 #include "day_input.h"
@@ -76,6 +88,18 @@ static inline U64 common_powi_u64(U64 x, U64 y)
     return result;
 }
 
+static inline F32 common_powi_f32(F32 x, U64 y)
+{
+    F32 result = (F32)__builtin_powi(x, (int)y);
+    return result;
+}
+
+static inline F32 common_sqrt_f32(F32 value)
+{
+    F32 result = (F32)__builtin_sqrt(value);
+    return result;
+}
+
 static inline int common_memcmp(void *left, void *right, U64 n)
 {
     return __builtin_memcmp(left, right, n);
@@ -85,5 +109,7 @@ static inline void *common_memcpy(void *dest, void *src, U64 n)
 {
     return __builtin_memcpy(dest, src, n);
 }
+
+#include "vector.h"
 
 #endif

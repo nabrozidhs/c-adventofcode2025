@@ -1,5 +1,3 @@
-#include "common/common.h"
-
 typedef struct {
     U8 *content;
     Vector2i size;
