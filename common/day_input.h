@@ -62,7 +62,7 @@ static inline DayInputNextI64 day_input_read_next_i64(DayInput *input)
 
     day_input_skip_whitespace(input);
 
-    if (is_digit(input->content[input->position]))
+    if (input->position < input->size && is_digit(input->content[input->position]))
     {
         result.is_valid = true;
         // TODO handle '-' sign

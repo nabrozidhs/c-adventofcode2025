@@ -22,6 +22,8 @@ _Static_assert(sizeof(U64) == 8, "U64 must be 8 bytes");
 typedef int32_t I32;
 typedef int64_t I64;
 
+#define I32_MAX INT32_MAX
+
 _Static_assert(sizeof(I32) == 4, "I32 must be 4 bytes");
 _Static_assert(sizeof(I64) == 8, "I64 must be 8 bytes");
 
@@ -36,6 +38,7 @@ typedef uint32_t B32;
 #define KILOBYTE(n) (n * 1024L)
 #define MEGABYTE(n) (KILOBYTE(n) * 1024L)
 
+#define MINIMUM(a, b) ((a) < (b) ? (a) : (b))
 #define MAXIMUM(a, b) ((a) > (b) ? (a) : (b))
 
 #include "string.h"

@@ -1,5 +1,3 @@
-#include "common/common.h"
-
 typedef struct {
     U64 position_index_1;
     U64 position_index_2;
@@ -103,12 +101,12 @@ internal U64 *initialise_position_index_to_circuit_id(MemoryArena *arena, Buffer
 
 internal void day08_part1(DAY_ARGS)
 {
-    U64 n_iterations = 10; // NOTE: change this to 1000 for the real input
 
     Buffer *positions = parse_positions(arena, day_input);
     Buffer *position_indices_and_distance = day08_initialise_position_indices_and_distances(arena, positions);
     U64 *position_index_to_circuit_id = initialise_position_index_to_circuit_id(arena, positions);
 
+    U64 n_iterations = positions->size > 100 ? 1000 : 10; // NOTE different iteration number for test and real input
     for (int iteration = 0; iteration < n_iterations; ++iteration)
     {
         Day08_Position_Indices_And_Distance position_indices = buffer_get(
