@@ -41,6 +41,11 @@ typedef uint32_t B32;
 #define MINIMUM(a, b) ((a) < (b) ? (a) : (b))
 #define MAXIMUM(a, b) ((a) > (b) ? (a) : (b))
 
+static inline B32 common_is_digit(U8 c)
+{
+    return ((c >= '0') && (c <= '9'));
+}
+
 #include "string.h"
 #include "memory_arena.h"
 #include "day_input.h"

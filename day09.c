@@ -1,5 +1,3 @@
-#include "common/common.h"
-
 internal Buffer* day09_parse_positions(MemoryArena *arena, DayInput *day_input)
 {
     Buffer *positions = buffer_init(arena, sizeof(Vector2i), day_input->size);

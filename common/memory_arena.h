@@ -41,6 +41,16 @@ static inline void *memory_arena_alloc(MemoryArena *arena, U64 size)
     return ptr;
 }
 
+static inline U64 memory_arena_mark(MemoryArena *arena)
+{
+    return arena->used;
+}
+
+static inline U64 memory_arena_reset_to_mark(MemoryArena *arena, U64 mark)
+{
+    return arena->used = mark;
+}
+
 #define memory_arena_push_array(arena, type, count) (type *)memory_arena_alloc(arena, sizeof(type) * count)
 #define memory_arena_push_struct(arena, type) memory_arena_push_array(arena, type, 1)
 
