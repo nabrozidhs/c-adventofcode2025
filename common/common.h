@@ -12,6 +12,7 @@
 #include <stdlib.h>
 
 typedef uint8_t U8;
+typedef uint16_t U16;
 typedef uint32_t U32;
 typedef uint64_t U64;
 
@@ -113,5 +114,6 @@ static inline void *common_memcpy(void *dest, void *src, U64 n)
 #include "vector.h"
 #include "string.h"
 #include "day_input.h"
+#include "hash_map.h"
 
 #endif
