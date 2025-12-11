@@ -46,9 +46,7 @@ static inline B32 common_is_digit(U8 c)
     return ((c >= '0') && (c <= '9'));
 }
 
-#include "string.h"
 #include "memory_arena.h"
-#include "day_input.h"
 #include "buffer.h"
 
 #define DAY_ARGS DayInput *day_input, MemoryArena *arena
@@ -113,5 +111,7 @@ static inline void *common_memcpy(void *dest, void *src, U64 n)
 }
 
 #include "vector.h"
+#include "string.h"
+#include "day_input.h"
 
 #endif

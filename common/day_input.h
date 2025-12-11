@@ -98,7 +98,7 @@ static inline DayInputNextU64 day_input_read_next_u64(DayInput *input)
     if (result.is_valid)
     {
         U64 size = (input->position - start_position);
-        String8 string = string8_from_c_string((input->content + start_position), size);
+        String8 string = string8_from_slice((input->content + start_position), size);
         result.string = string;
     }
 
@@ -143,7 +143,7 @@ static inline DayInputNextLine day_input_read_next_line(DayInput *input)
 
     if (result.is_valid)
     {
-        result.line = string8_from_c_string((input->content + start_position), (input->position - start_position));
+        result.line = string8_from_slice((input->content + start_position), (input->position - start_position));
         if (input->position < input->size)
         {
             ++input->position;

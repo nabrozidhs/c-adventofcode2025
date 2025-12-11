@@ -13,8 +13,8 @@ typedef struct {
     Buffer *counters;
 } Day10_Parsed_Line;
 
-const U64 DAY10_BUTTONS_CAPACITY = 13;
-const U64 DAY10_BUTTON_INDICES_CAPACITY = 9;
+#define DAY10_BUTTONS_CAPACITY 13
+#define DAY10_BUTTON_INDICES_CAPACITY 9
 
 internal Day10_Parsed_Line day10_parse_line(MemoryArena *arena, String8 next_line)
 {
@@ -123,7 +123,7 @@ typedef struct {
     I32 last_button_index;
 } Day10_Find_Button_Presses_For_Joltage;
 
-internal static B32 day10_button_counts_match(U32 *left_button_counts, U32 *right_button_counts)
+internal inline B32 day10_button_counts_match(U32 *left_button_counts, U32 *right_button_counts)
 {
     B32 result = (common_memcmp(left_button_counts, right_button_counts, sizeof(U32) * DAY10_BUTTON_INDICES_CAPACITY) == 0);
     return result;
@@ -191,5 +191,5 @@ void day10(DAY_ARGS)
 {
     day10_part1(DAY_CALL);
     day_input_reset(day_input);
-    day10_part2(DAY_CALL);
+    // day10_part2(DAY_CALL);
 }
