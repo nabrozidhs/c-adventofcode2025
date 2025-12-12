@@ -15,8 +15,11 @@ static inline DayInput day_input_from_file(char *filename, MemoryArena *arena)
     FILE *f = fopen(filename, "r");
     assert(f != NULL);
 
-    fseek(f, 0, SEEK_END);
-    U64 size = ftell(f);
+    int fseek_result = fseek(f, 0, SEEK_END);
+    assert(fseek_result == 0);
+    long ftell_result = ftell(f);
+    assert(ftell_result >= 0);
+    U64 size = (U64)ftell_result;
     fseek(f, 0, SEEK_SET);
 
     result.content = memory_arena_alloc(arena, size);
@@ -73,9 +76,34 @@ static inline DayInputNextI64 day_input_read_next_i64(DayInput *input)
 
 typedef struct
 {
+    I32 value;
+    B32 is_valid;
+} DayInputNextI32;
+
+static inline DayInputNextI32 day_input_read_next_i32(DayInput *input)
+{
+    DayInputNextI32 result = {0};
+
+    day_input_skip_whitespace(input);
+
+    if (input->position < input->size && char_is_digit(input->content[input->position]))
+    {
+        result.is_valid = true;
+        // TODO handle '-' sign
+        while ((input->position < input->size) && char_is_digit(input->content[input->position]))
+        {
+            result.value = result.value * 10 + (input->content[input->position] - '0');
+            ++input->position;
+        }
+    }
+
+    return result;
+}
+
+typedef struct
+{
     U64 value;
     B32 is_valid;
-    String8 string;
 } DayInputNextU64;
 
 static inline DayInputNextU64 day_input_read_next_u64(DayInput *input)
@@ -84,7 +112,6 @@ static inline DayInputNextU64 day_input_read_next_u64(DayInput *input)
 
     day_input_skip_whitespace(input);
 
-    U64 start_position = input->position;
     if (char_is_digit(input->content[input->position]))
     {
         result.is_valid = true;
@@ -95,20 +122,13 @@ static inline DayInputNextU64 day_input_read_next_u64(DayInput *input)
         }
     }
 
-    if (result.is_valid)
-    {
-        U64 size = (input->position - start_position);
-        String8 string = string8_from_slice((input->content + start_position), size);
-        result.string = string;
-    }
-
     return result;
 }
 
 typedef struct
 {
-    U8 value;
     B32 is_valid;
+    U8 value;
 } DayInputNextU8;
 
 static inline DayInputNextU8 day_input_read_next_char(DayInput *input)

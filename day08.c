@@ -4,39 +4,23 @@ typedef struct {
     F32 distance;
 } Day08_Position_Indices_And_Distance;
 
-int day08_compare_by_distance(const void *a, const void *b)
+internal int day08_compare_by_distance(const void *a, const void *b)
 {
-    F32 distance_left = ((Day08_Position_Indices_And_Distance*)a)->distance;
-    F32 distance_right = ((Day08_Position_Indices_And_Distance*)b)->distance;
+    F32 distance_left = ((const Day08_Position_Indices_And_Distance*)a)->distance;
+    F32 distance_right = ((const Day08_Position_Indices_And_Distance*)b)->distance;
 
-    if (distance_left < distance_right)
-    {
-        return -1;
-    }
-    if (distance_left > distance_right)
-    {
-        return 1;
-    }
-    return 0;
+    return (distance_left > distance_right) - (distance_left < distance_right);
 }
 
-int day08_compare_by_u64(const void *a, const void *b)
+internal int day08_compare_by_u64(const void *a, const void *b)
 {
-    U64 left = *(U64*)a;
-    U64 right = *(U64*)b;
+    U64 left = *(const U64*)a;
+    U64 right = *(const U64*)b;
 
-    if (left < right)
-    {
-        return -1;
-    }
-    if (left > right)
-    {
-        return 1;
-    }
-    return 0;
+    return (left > right) - (left < right);
 }
 
-internal Buffer* parse_positions(MemoryArena *arena, DayInput *day_input)
+internal Buffer *parse_positions(MemoryArena *arena, DayInput *day_input)
 {
     Buffer *positions = buffer_init(arena, sizeof(Vector3i), day_input->size / 3);
     for (;;)
@@ -51,9 +35,9 @@ internal Buffer* parse_positions(MemoryArena *arena, DayInput *day_input)
         Vector3i *v = &buffer_get(positions, Vector3i, positions->size++);
         v->x = (I32)next_i64.value;
         day_input_read_next_char(day_input);
-        v->y = day_input_read_next_i64(day_input).value;
+        v->y = day_input_read_next_i32(day_input).value;
         day_input_read_next_char(day_input);
-        v->z = day_input_read_next_i64(day_input).value;
+        v->z = day_input_read_next_i32(day_input).value;
     }
     return positions;
 }
@@ -92,7 +76,7 @@ internal Buffer *day08_initialise_position_indices_and_distances(MemoryArena *ar
 internal U64 *initialise_position_index_to_circuit_id(MemoryArena *arena, Buffer *positions)
 {
     U64 *position_index_to_circuit_id = memory_arena_push_array(arena, U64, positions->size);
-    for (int i = 0; i < positions->size; ++i)
+    for (U64 i = 0; i < positions->size; ++i)
     {
         position_index_to_circuit_id[i] = i;
     }
@@ -107,7 +91,7 @@ internal void day08_part1(DAY_ARGS)
     U64 *position_index_to_circuit_id = initialise_position_index_to_circuit_id(arena, positions);
 
     U64 n_iterations = positions->size > 100 ? 1000 : 10; // NOTE different iteration number for test and real input
-    for (int iteration = 0; iteration < n_iterations; ++iteration)
+    for (U64 iteration = 0; iteration < n_iterations; ++iteration)
     {
         Day08_Position_Indices_And_Distance position_indices = buffer_get(
             position_indices_and_distance, Day08_Position_Indices_And_Distance, iteration);
@@ -118,7 +102,7 @@ internal void day08_part1(DAY_ARGS)
             continue;
         }
 
-        for (int i = 0; i < positions->size; ++i)
+        for (U64 i = 0; i < positions->size; ++i)
         {
             if (position_index_to_circuit_id[i] == circuit_id_2)
             {
@@ -192,7 +176,7 @@ internal void day08_part2(DAY_ARGS)
         }
 
         ++connected;
-        for (int i = 0; i < positions->size; ++i)
+        for (U64 i = 0; i < positions->size; ++i)
         {
             if (position_index_to_circuit_id[i] == circuit_id_2)
             {

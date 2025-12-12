@@ -18,7 +18,7 @@ internal Day04_Find_Map_Size day04_find_map_size(MemoryArena *arena, DayInput *d
 
         common_memcpy(result.content + result.size.y * result.size.x, next_line.line.str, next_line.line.size);
 
-        result.size.x = MAXIMUM(result.size.x, next_line.line.size);
+        result.size.x = (I32)MAXIMUM((U64)result.size.x, next_line.line.size);
         ++result.size.y;
     }
 
@@ -69,9 +69,9 @@ internal void day04_part1(Day04_Find_Map_Size *map)
 {
     U64 sum = 0;
 
-    for (U64 y = 0; y < map->size.y; ++y)
+    for (I32 y = 0; y < map->size.y; ++y)
     {
-        for (U64 x = 0; x < map->size.x; ++x)
+        for (I32 x = 0; x < map->size.x; ++x)
         {
             Vector2i position = {x, y};
             if (!has_paper(map, position))
@@ -95,9 +95,9 @@ internal void day04_part2(Day04_Find_Map_Size *map)
     for (;;)
     {
         B32 found_at_least_one = false;
-        for (U64 y = 0; y < map->size.y; ++y)
+        for (I32 y = 0; y < map->size.y; ++y)
         {
-            for (U64 x = 0; x < map->size.x; ++x)
+            for (I32 x = 0; x < map->size.x; ++x)
             {
                 Vector2i position = {x, y};
                 if (!has_paper(map, position))

@@ -18,7 +18,7 @@ internal Day07_Find_Map_Size day07_find_map_size(MemoryArena *arena, DayInput *d
 
         common_memcpy(result.content + result.size.y * result.size.x, next_line.line.str, next_line.line.size);
 
-        result.size.x = MAXIMUM(result.size.x, next_line.line.size);
+        result.size.x = (I32)MAXIMUM((U64)result.size.x, next_line.line.size);
         ++result.size.y;
     }
 
@@ -28,9 +28,9 @@ internal Day07_Find_Map_Size day07_find_map_size(MemoryArena *arena, DayInput *d
 internal Vector2i find_start(Day07_Find_Map_Size *map)
 {
     Vector2i result = {0};
-    for (U64 x = 0; x < map->size.x; ++x)
+    for (I32 x = 0; x < map->size.x; ++x)
     {
-        if (map->content[x] == 'S')
+        if (map->content[(U64)x] == 'S')
         {
             result.x = x;
             return result;
@@ -43,7 +43,7 @@ internal Vector2i find_start(Day07_Find_Map_Size *map)
 internal void day07_part1(DAY_ARGS)
 {
     Day07_Find_Map_Size map = day07_find_map_size(arena, day_input);
-    Buffer *beams_queue = buffer_init(arena, sizeof(Vector2i), map.size.x * map.size.y);
+    Buffer *beams_queue = buffer_init(arena, sizeof(Vector2i), (U64)(map.size.x * map.size.y));
 
     Vector2i start = find_start(&map);
     Vector2i first_beam = (Vector2i){start.x, 1};
@@ -56,7 +56,7 @@ internal void day07_part1(DAY_ARGS)
     {
         Vector2i beam = buffer_get(beams_queue, Vector2i, current_beam_index++);
 
-        U64 y = beam.y + 1;
+        I32 y = (beam.y + 1);
         while (y < map.size.y && map.content[beam.x + y * map.size.x] == '.')
         {
             map.content[beam.x + y * map.size.x] = '|';
@@ -94,7 +94,7 @@ internal U64 find_timelines(Day07_Find_Map_Size *map, U64 *cache, Vector2i beam_
         return cache_value;
     }
 
-    U64 y = beam_position.y + 1;
+    I32 y = beam_position.y + 1;
     while (y < map->size.y && map->content[beam_position.x + y * map->size.x] == '.')
     {
         ++y;
@@ -115,10 +115,10 @@ internal U64 find_timelines(Day07_Find_Map_Size *map, U64 *cache, Vector2i beam_
 internal void day07_part2(DAY_ARGS)
 {
     Day07_Find_Map_Size map = day07_find_map_size(arena, day_input);
-    U64 *cache = memory_arena_push_array(arena, U64, map.size.x * map.size.y);
-    for (U64 y = 0; y < map.size.y; ++y)
+    U64 *cache = memory_arena_push_array(arena, U64, (U64)(map.size.x * map.size.y));
+    for (I32 y = 0; y < map.size.y; ++y)
     {
-        for (U64 x = 0; x < map.size.x; ++x)
+        for (I32 x = 0; x < map.size.x; ++x)
         {
             cache[x + y * map.size.x] = 0;
         }

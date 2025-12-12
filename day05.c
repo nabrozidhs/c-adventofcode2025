@@ -16,7 +16,7 @@ internal B32 is_fresh(Buffer *buffer, U64 ingredient_id)
     return false;
 }
 
-internal Buffer* day05_common(MemoryArena *arena, DayInput *day_input)
+internal Buffer *day05_common(MemoryArena *arena, DayInput *day_input)
 {
     Buffer *ranges = buffer_init(arena, sizeof(Day05_Range), day_input->size / 3);
     while (day_input->content[day_input->position] != '\n')
@@ -57,17 +57,17 @@ internal void day05_part1(DAY_ARGS)
     printf("Part 1: %llu\n", sum);
 }
 
-int sort_by_start(const void *a, const void *b)
+internal int sort_by_start(const void *a, const void *b)
 {
-    U64 left_start = ((Day05_Range*)a)->start;
-    U64 right_start = ((Day05_Range*)b)->start;
+    U64 left_start = ((const Day05_Range*)a)->start;
+    U64 right_start = ((const Day05_Range*)b)->start;
     return (left_start > right_start) - (left_start < right_start);
 }
 
-int sort_by_end(const void *a, const void *b)
+internal int sort_by_end(const void *a, const void *b)
 {
-    U64 left_end = ((Day05_Range*)a)->end;
-    U64 right_end = ((Day05_Range*)b)->end;
+    U64 left_end = ((const Day05_Range*)a)->end;
+    U64 right_end = ((const Day05_Range*)b)->end;
     return (left_end > right_end) - (left_end < right_end);
 }
 

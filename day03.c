@@ -9,7 +9,7 @@ internal Day03FindLargest day03_find_largest(String8 line)
     Day03FindLargest largest = {0};
     for (U64 i = 0; i < line.size; ++i)
     {
-        U64 value = line.str[i];
+        U8 value = line.str[i];
         if (value > largest.value)
         {
             largest.value = value;
@@ -33,7 +33,7 @@ internal U64 day03_find_n_largest(String8 line, U32 n)
         result = (10 * result) + (U64)(largest.value - '0');
 
         input.str += (largest.position + 1);
-        input.size = line.size - (n - 1) + (i + 1) - (input.str - line.str);
+        input.size = line.size - (n - 1) + (i + 1) - (U64)(input.str - line.str);
     }
 
     return result;

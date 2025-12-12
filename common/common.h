@@ -38,9 +38,10 @@ typedef uint32_t B32;
 #define DAY_ARGS DayInput *day_input, MemoryArena *arena
 #define DAY_CALL day_input, arena
 
-static inline I64 common_abs_i64(I64 value)
+static inline U64 common_abs_i64(I64 value)
 {
-    I64 result = __builtin_llabs(value);
+    long long result_long = __builtin_llabs(value);
+    U64 result = (U64)result_long;
     return result;
 }
 

@@ -41,13 +41,13 @@ internal void day01_part2(DAY_ARGS)
         if (next_char.value == 'L')
         {
             dial = ((100 - dial) % 100) + next_number.value;
-            count += (dial / 100);
+            count += ((U64)dial / 100);
             dial = ((100 - (dial % 100)) % 100);
         }
         else
         {
             dial += next_number.value;
-            count += (dial / 100);
+            count += ((U64)dial / 100);
             dial %= 100;
         }
 

@@ -110,7 +110,7 @@ internal U32 day10_find_button_presses_for_light_mask(MemoryArena *arena, Day10_
             Day10_Find_Button_Presses_For_Light_Mask new = {
                 .light_mask = next.light_mask ^ buffer_get(parsed_line.buttons, Day10_Buttons, i).button_mask,
                 .presses = next.presses + 1,
-                .last_button_index = i
+                .last_button_index = (I32)i
             };
             buffer_add(bfs, Day10_Find_Button_Presses_For_Light_Mask, new);
         }
@@ -147,7 +147,7 @@ internal U32 day10_find_button_presses_for_joltage(MemoryArena *arena, Day10_Par
 
         for (U64 i = (U64)(next.last_button_index + 1); i < parsed_line.buttons->size; ++i)
         {
-            next.last_button_index = i;
+            next.last_button_index = (I32)i;
             Day10_Find_Button_Presses_For_Joltage new = next;
             buffer_add(bfs, Day10_Find_Button_Presses_For_Joltage, new);
         }

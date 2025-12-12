@@ -49,19 +49,12 @@ typedef struct {
     U64 area;
 } Day09_Corners_To_Area;
 
-int day09_sort_by_area(const void *a, const void *b)
+internal int day09_sort_by_area(const void *a, const void *b)
 {
-    U64 left = ((Day09_Corners_To_Area*)a)->area;
-    U64 right = ((Day09_Corners_To_Area*)b)->area;
-    if (left > right)
-    {
-        return 1;
-    }
-    if (left < right)
-    {
-        return -1;
-    }
-    return 0;
+    U64 left = ((const Day09_Corners_To_Area*)a)->area;
+    U64 right = ((const Day09_Corners_To_Area*)b)->area;
+
+    return (left > right) - (left < right);
 }
 
 typedef struct {
@@ -125,8 +118,8 @@ internal B32 day09_is_rectangle_inside(Day09_Edge rect, Buffer *edges)
         // Horizontal line
         if (edge.edge_1.y == edge.edge_2.y)
         {
-            U64 edge_min_x = MINIMUM(edge.edge_1.x, edge.edge_2.x);
-            U64 edge_max_x = MAXIMUM(edge.edge_1.x, edge.edge_2.x);
+            I32 edge_min_x = MINIMUM(edge.edge_1.x, edge.edge_2.x);
+            I32 edge_max_x = MAXIMUM(edge.edge_1.x, edge.edge_2.x);
             if (min_y < edge.edge_1.y && edge.edge_1.y < max_y)
             {
                 if (!(edge_max_x <= min_x || edge_min_x >= max_x))
@@ -139,8 +132,8 @@ internal B32 day09_is_rectangle_inside(Day09_Edge rect, Buffer *edges)
         // Vertical line
         if (edge.edge_1.x == edge.edge_2.x)
         {
-            U64 edge_min_y = MINIMUM(edge.edge_1.y, edge.edge_2.y);
-            U64 edge_max_y = MAXIMUM(edge.edge_1.y, edge.edge_2.y);
+            I32 edge_min_y = MINIMUM(edge.edge_1.y, edge.edge_2.y);
+            I32 edge_max_y = MAXIMUM(edge.edge_1.y, edge.edge_2.y);
             if (min_x < edge.edge_1.x && edge.edge_1.x < max_x)
             {
                 if (!(edge_max_y <= min_y || edge_min_y >= max_y))

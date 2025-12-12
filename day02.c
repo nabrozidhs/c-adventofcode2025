@@ -64,7 +64,7 @@ internal void day02_part1(DAY_ARGS)
 internal B32 is_invalid_id_part2(U64 id)
 {
     U64 length = common_log10_u64(id);
-    for (int sequence_size = 1; sequence_size <= length / 2; ++sequence_size)
+    for (U64 sequence_size = 1; sequence_size <= length / 2; ++sequence_size)
     {
         if ((length % sequence_size == 0) && is_invalid_id(id, length, sequence_size))
         {
