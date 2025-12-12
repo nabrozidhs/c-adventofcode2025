@@ -208,7 +208,7 @@ internal void day08_part2(DAY_ARGS)
     printf("Part 2: %llu\n", result);
 }
 
-void day08(DAY_ARGS)
+internal void day08(DAY_ARGS)
 {
     day08_part1(DAY_CALL);
     day_input_reset(day_input);

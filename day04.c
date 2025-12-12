@@ -16,7 +16,7 @@ internal Day04_Find_Map_Size day04_find_map_size(MemoryArena *arena, DayInput *d
             break;
         }
 
-        common_memcpy(result.content + result.size.y * result.size.x, next_line.line.data, next_line.line.size);
+        common_memcpy(result.content + result.size.y * result.size.x, next_line.line.str, next_line.line.size);
 
         result.size.x = MAXIMUM(result.size.x, next_line.line.size);
         ++result.size.y;
@@ -123,7 +123,7 @@ internal void day04_part2(Day04_Find_Map_Size *map)
     printf("Part 2: %llu\n", removed);
 }
 
-void day04(DAY_ARGS)
+internal void day04(DAY_ARGS)
 {
     Day04_Find_Map_Size map = day04_find_map_size(arena, day_input);
     day04_part1(&map);

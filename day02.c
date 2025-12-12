@@ -81,7 +81,7 @@ internal void day02_part2(DAY_ARGS)
     printf("Part 2: %llu\n", sum);
 }
 
-void day02(DAY_ARGS)
+internal void day02(DAY_ARGS)
 {
     day02_part1(DAY_CALL);
     day_input_reset(day_input);

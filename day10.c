@@ -21,10 +21,10 @@ internal Day10_Parsed_Line day10_parse_line(MemoryArena *arena, String8 next_lin
     Day10_Parsed_Line parsed_line = {0};
 
     U64 i = 1;
-    assert(next_line.data[0] == '[');
-    while (next_line.data[i] != ']')
+    assert(next_line.str[0] == '[');
+    while (next_line.str[i] != ']')
     {
-        if (next_line.data[i] == '#')
+        if (next_line.str[i] == '#')
         {
             assert(i < 32);
             parsed_line.output |= 1 << (i - 1);
@@ -34,24 +34,24 @@ internal Day10_Parsed_Line day10_parse_line(MemoryArena *arena, String8 next_lin
     i += 2;
 
     parsed_line.buttons = buffer_init(arena, sizeof(Day10_Buttons), DAY10_BUTTONS_CAPACITY);
-    while (next_line.data[i] == '(')
+    while (next_line.str[i] == '(')
     {
         Day10_Buttons buttons = {0};
 
         ++i;
         U32 button_mask = 0;
         Buffer *button_indices = buffer_init(arena, sizeof(U32), DAY10_BUTTON_INDICES_CAPACITY);
-        while (next_line.data[i] != ')')
+        while (next_line.str[i] != ')')
         {
             U32 number = 0;
-            while (common_is_digit(next_line.data[i]))
+            while (char_is_digit(next_line.str[i]))
             {
-                number = number * 10 + (next_line.data[i++] - '0');
+                number = number * 10 + (next_line.str[i++] - '0');
             }
 
             button_mask |= (1 << number);
             buffer_add(button_indices, U32, number);
-            if (next_line.data[i] == ',')
+            if (next_line.str[i] == ',')
             {
                 ++i;
             }
@@ -64,16 +64,16 @@ internal Day10_Parsed_Line day10_parse_line(MemoryArena *arena, String8 next_lin
     }
 
     parsed_line.counters = buffer_init(arena, sizeof(U32), DAY10_BUTTON_INDICES_CAPACITY);
-    assert(next_line.data[i++] == '{');
-    while (next_line.data[i] != '}')
+    assert(next_line.str[i++] == '{');
+    while (next_line.str[i] != '}')
     {
         U32 number = 0;
-        while (common_is_digit(next_line.data[i]))
+        while (char_is_digit(next_line.str[i]))
         {
-            number = number * 10 + (next_line.data[i++] - '0');
+            number = number * 10 + (next_line.str[i++] - '0');
         }
 
-        if (next_line.data[i] == ',')
+        if (next_line.str[i] == ',')
         {
             ++i;
         }
@@ -187,7 +187,7 @@ internal void day10_part2(DAY_ARGS)
     printf("Part 2: %llu\n", sum);
 }
 
-void day10(DAY_ARGS)
+internal void day10(DAY_ARGS)
 {
     day10_part1(DAY_CALL);
     day_input_reset(day_input);

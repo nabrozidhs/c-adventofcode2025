@@ -28,13 +28,13 @@ internal Day11_Parsed day11_parse(MemoryArena *arena, DayInput *day_input)
         }
 
         String8 line = next_line.line;
-        buffer_add(result.device_position_index_to_device_id, String8, ((String8){.data = line.data, .size = 3}));
+        buffer_add(result.device_position_index_to_device_id, String8, ((String8){.str = line.str, .size = 3}));
         Buffer *connected_device_ids = buffer_init(arena, sizeof(String8), (line.size - 4) / 4);
 
         U64 i = 5;
         while (i < line.size)
         {
-            buffer_add(connected_device_ids, String8, ((String8){.data = line.data + i, .size = 3}));
+            buffer_add(connected_device_ids, String8, ((String8){.str = line.str + i, .size = 3}));
             i += 4;
         }
         buffer_add(result.device_position_index_to_connected_device_ids, Buffer*, connected_device_ids);
@@ -65,8 +65,8 @@ typedef struct {
 internal U64 day11_common(MemoryArena *arena, DayInput *day_input, String8 start, String8 end, B32 (* p) (Day11_Path))
 {
     Day11_Parsed parsed = day11_parse(arena, day_input);
-    String8 fft = string8_from_c_string("fft");
-    String8 dac = string8_from_c_string("dac");
+    String8 fft = string8_from_c_string((U8 *)"fft");
+    String8 dac = string8_from_c_string((U8 *)"dac");
     Day11_Path current_path = {0};
     current_path.device_position_index = day11_device_to_device_position_index(parsed, start);
     current_path.path_size = 1;
@@ -115,8 +115,8 @@ internal void day11_part1(DAY_ARGS)
     U64 sum = day11_common(
         arena,
         day_input,
-        string8_from_c_string("you"),
-        string8_from_c_string("out"),
+        string8_from_c_string((U8 *)"you"),
+        string8_from_c_string((U8 *)"out"),
         day11_part1_condition
     );
     printf("Part 1: %llu\n", sum);
@@ -129,14 +129,14 @@ internal void day11_part2(DAY_ARGS)
     U64 sum = day11_common(
         arena,
         day_input,
-        string8_from_c_string("svr"),
-        string8_from_c_string("out"),
+        string8_from_c_string((U8 *)"svr"),
+        string8_from_c_string((U8 *)"out"),
         day11_part2_condition
     );
     printf("Part 2: %llu\n", sum);
 }
 
-void day11(DAY_ARGS)
+internal void day11(DAY_ARGS)
 {
     day11_part1(DAY_CALL);
     day_input_reset(day_input);

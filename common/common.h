@@ -16,23 +16,13 @@ typedef uint16_t U16;
 typedef uint32_t U32;
 typedef uint64_t U64;
 
-_Static_assert(sizeof(U8) == 1, "U8 must be 1 byte");
-_Static_assert(sizeof(U32) == 4, "U32 must be 4 bytes");
-_Static_assert(sizeof(U64) == 8, "U64 must be 8 bytes");
-
 typedef int32_t I32;
 typedef int64_t I64;
 
 #define I32_MAX INT32_MAX
 
-_Static_assert(sizeof(I32) == 4, "I32 must be 4 bytes");
-_Static_assert(sizeof(I64) == 8, "I64 must be 8 bytes");
-
 typedef float F32;
 typedef double F64;
-
-_Static_assert(sizeof(F32) == 4, "F32 must be 4 bytes");
-_Static_assert(sizeof(F64) == 8, "F64 must be 8 bytes");
 
 typedef uint32_t B32;
 
@@ -41,11 +31,6 @@ typedef uint32_t B32;
 
 #define MINIMUM(a, b) ((a) < (b) ? (a) : (b))
 #define MAXIMUM(a, b) ((a) > (b) ? (a) : (b))
-
-static inline B32 common_is_digit(U8 c)
-{
-    return ((c >= '0') && (c <= '9'));
-}
 
 #include "memory_arena.h"
 #include "buffer.h"
@@ -91,13 +76,15 @@ static inline U64 common_log10_u64(U64 value)
 
 static inline U64 common_powi_u64(U64 x, U64 y)
 {
-    U64 result = (U64)__builtin_powi((double)x, (int)y);
+    double double_result = __builtin_powi((double)x, (int)y);
+    U64 result = (U64)double_result;
     return result;
 }
 
 static inline F32 common_powi_f32(F32 x, U64 y)
 {
-    F32 result = (F32)__builtin_powi(x, (int)y);
+    double double_result = __builtin_powi((double)x, (int)y);
+    F32 result = (F32)double_result;
     return result;
 }
 
@@ -111,8 +98,8 @@ static inline void *common_memcpy(void *dest, void *src, U64 n)
     return __builtin_memcpy(dest, src, n);
 }
 
-#include "vector.h"
 #include "string.h"
+#include "vector.h"
 #include "day_input.h"
 #include "hash_map.h"
 

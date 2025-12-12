@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-cc -Wall -Wpedantic meta.c -o meta
+cc_warning_options="-Weverything -Wextra -Wall -Wpedantic"
+cc_skip_checks_options="-Wno-unused-parameter -Wno-declaration-after-statement"
+
+cc $cc_warning_options meta.c -o meta
 ./meta
 rm meta
 
-cc -Wall -Wpedantic main.c -o adventofcode
+cc $cc_warning_options $cc_skip_checks_options main.c -o adventofcode
 ./adventofcode
 rm adventofcode

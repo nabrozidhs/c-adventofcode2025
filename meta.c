@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-const int MAX_DAY = 11;
+#define MAX_DAY 11
 
-int main(int argc, char **argv)
+int main(void)
 {
     FILE* f = fopen("days.c", "w");
     if (f == NULL)
@@ -18,12 +18,13 @@ int main(int argc, char **argv)
         fprintf(f, "#include \"day%02d.c\"\n", day);
     }
     fprintf(f, "\n");
-    fprintf(f, "void run_all(MemoryArena *arena) {\n");
+    fprintf(f, "static void run_all(MemoryArena *arena) {\n");
+    fprintf(f, "  DayInput day_input = {0};\n");
     for (int day = 1; day <= MAX_DAY; ++day)
     {
         fprintf(f, "  {\n");
         fprintf(f, "    memory_arena_reset(arena);\n");
-        fprintf(f, "    DayInput day_input = day_input_from_file(\"day%02d.txt\", arena);\n", day);
+        fprintf(f, "    day_input = day_input_from_file(\"day%02d.txt\", arena);\n", day);
         fprintf(f, "    printf(\"Running day %d\\n\");\n", day);
         fprintf(f, "    day%02d(&day_input, arena);\n", day);
         fprintf(f, "  }\n");

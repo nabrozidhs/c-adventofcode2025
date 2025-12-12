@@ -56,7 +56,7 @@ internal void day06_part2(DAY_ARGS)
     DayInputNextLine operations_line = day_input_read_next_line(day_input);
     assert(operations_line.is_valid);
     U64 rows = 0;
-    while (operations_line.line.data[0] != '+' && operations_line.line.data[0] != '*')
+    while (operations_line.line.str[0] != '+' && operations_line.line.str[0] != '*')
     {
         operations_line = day_input_read_next_line(day_input);
         assert(operations_line.is_valid);
@@ -73,12 +73,12 @@ internal void day06_part2(DAY_ARGS)
             break;
         }
 
-        while (group_end < operations_line.line.size && operations_line.line.data[group_end] == ' ')
+        while (group_end < operations_line.line.size && operations_line.line.str[group_end] == ' ')
         {
             ++group_end;
         }
 
-        U8 operation = operations_line.line.data[group_start];
+        U8 operation = operations_line.line.str[group_start];
         U64 columns_sum = (operation == '*') ? 1 : 0;
         for (U64 column = group_start; column < group_end; ++column)
         {
@@ -112,7 +112,7 @@ internal void day06_part2(DAY_ARGS)
     printf("Part 2: %llu\n", total);
 }
 
-void day06(DAY_ARGS)
+internal void day06(DAY_ARGS)
 {
     day06_part1(DAY_CALL);
     day_input_reset(day_input);

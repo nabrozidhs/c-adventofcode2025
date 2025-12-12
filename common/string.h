@@ -1,8 +1,13 @@
 #ifndef STRING_H
 #define STRING_H
 
+static inline B32 char_is_digit(U8 c)
+{
+    return ((c >= '0') && (c <= '9'));
+}
+
 typedef struct {
-    U8 *data;
+    U8 *str;
     U64 size;
 } String8;
 
@@ -15,7 +20,7 @@ static inline String8 string8_from_c_string(U8 *c_string)
     }
 
     String8 result = {
-        .data = c_string,
+        .str = c_string,
         .size = size
     };
 
@@ -25,7 +30,7 @@ static inline String8 string8_from_c_string(U8 *c_string)
 static inline String8 string8_from_slice(U8 *slice, U64 size)
 {
     String8 result = {
-        .data = slice,
+        .str = slice,
         .size = size
     };
     return result;
@@ -38,7 +43,7 @@ static inline B32 string8_equals(String8 a, String8 b)
         return false;
     }
 
-    B32 result = (common_memcmp(a.data, b.data, a.size) == 0);
+    B32 result = (common_memcmp(a.str, b.str, a.size) == 0);
     return result;
 }
 

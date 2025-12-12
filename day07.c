@@ -16,7 +16,7 @@ internal Day07_Find_Map_Size day07_find_map_size(MemoryArena *arena, DayInput *d
             break;
         }
 
-        common_memcpy(result.content + result.size.y * result.size.x, next_line.line.data, next_line.line.size);
+        common_memcpy(result.content + result.size.y * result.size.x, next_line.line.str, next_line.line.size);
 
         result.size.x = MAXIMUM(result.size.x, next_line.line.size);
         ++result.size.y;
@@ -131,7 +131,7 @@ internal void day07_part2(DAY_ARGS)
     printf("Part 2: %llu\n", total_timelines);
 }
 
-void day07(DAY_ARGS)
+internal void day07(DAY_ARGS)
 {
     day07_part1(DAY_CALL);
     day_input_reset(day_input);

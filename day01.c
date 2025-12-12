@@ -57,7 +57,7 @@ internal void day01_part2(DAY_ARGS)
     printf("Part 2: %llu\n", count);
 }
 
-void day01(DAY_ARGS)
+internal void day01(DAY_ARGS)
 {
     day01_part1(DAY_CALL);
     day_input_reset(day_input);

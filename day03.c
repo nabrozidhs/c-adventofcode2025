@@ -9,7 +9,7 @@ internal Day03FindLargest day03_find_largest(String8 line)
     Day03FindLargest largest = {0};
     for (U64 i = 0; i < line.size; ++i)
     {
-        U64 value = line.data[i];
+        U64 value = line.str[i];
         if (value > largest.value)
         {
             largest.value = value;
@@ -24,7 +24,7 @@ internal U64 day03_find_n_largest(String8 line, U32 n)
 {
     U64 result = 0;
     String8 input = {
-        .data = line.data,
+        .str = line.str,
         .size = line.size - (n - 1)
     };
     for (U32 i = 0; i < n; ++i)
@@ -32,8 +32,8 @@ internal U64 day03_find_n_largest(String8 line, U32 n)
         Day03FindLargest largest = day03_find_largest(input);
         result = (10 * result) + (U64)(largest.value - '0');
 
-        input.data += (largest.position + 1);
-        input.size = line.size - (n - 1) + (i + 1) - (input.data - line.data);
+        input.str += (largest.position + 1);
+        input.size = line.size - (n - 1) + (i + 1) - (input.str - line.str);
     }
 
     return result;
@@ -68,7 +68,7 @@ internal void day03_part2(DAY_ARGS)
     printf("Part 2: %llu\n", sum);
 }
 
-void day03(DAY_ARGS)
+internal void day03(DAY_ARGS)
 {
     day03_part1(DAY_CALL);
     day_input_reset(day_input);

@@ -57,11 +57,11 @@ static inline DayInputNextI64 day_input_read_next_i64(DayInput *input)
 
     day_input_skip_whitespace(input);
 
-    if (input->position < input->size && common_is_digit(input->content[input->position]))
+    if (input->position < input->size && char_is_digit(input->content[input->position]))
     {
         result.is_valid = true;
         // TODO handle '-' sign
-        while ((input->position < input->size) && common_is_digit(input->content[input->position]))
+        while ((input->position < input->size) && char_is_digit(input->content[input->position]))
         {
             result.value = result.value * 10 + (input->content[input->position] - '0');
             ++input->position;
@@ -85,10 +85,10 @@ static inline DayInputNextU64 day_input_read_next_u64(DayInput *input)
     day_input_skip_whitespace(input);
 
     U64 start_position = input->position;
-    if (common_is_digit(input->content[input->position]))
+    if (char_is_digit(input->content[input->position]))
     {
         result.is_valid = true;
-        while ((input->position < input->size) && common_is_digit(input->content[input->position]))
+        while ((input->position < input->size) && char_is_digit(input->content[input->position]))
         {
             result.value = result.value * 10 + (input->content[input->position] - '0');
             ++input->position;

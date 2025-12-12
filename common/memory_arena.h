@@ -36,7 +36,7 @@ static inline void *memory_arena_alloc_aligned(MemoryArena *arena, U64 size, U64
 
 static inline void *memory_arena_alloc(MemoryArena *arena, U64 size)
 {
-    U64 alignment = alignof(max_align_t);
+    U64 alignment = __alignof__(max_align_t);
     void *ptr = memory_arena_alloc_aligned(arena, size, alignment);
     return ptr;
 }

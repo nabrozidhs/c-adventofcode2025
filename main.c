@@ -1,7 +1,7 @@
 #include "common/common.h"
 #include "days.c"
 
-int main(int argc, char **argv)
+int main(void)
 {
     U64 memory_buffer_size = MEGABYTE(32);
     void *memory_buffer = malloc(memory_buffer_size);
