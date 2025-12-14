@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#define MIN_DAY 11
 #define MAX_DAY 11
 
 int main(void)
@@ -13,14 +14,14 @@ int main(void)
 
     fprintf(f, "// Generated code do not edit!\n");
     fprintf(f, "\n");
-    for (int day = 1; day <= MAX_DAY; ++day)
+    for (int day = MIN_DAY; day <= MAX_DAY; ++day)
     {
         fprintf(f, "#include \"day%02d.c\"\n", day);
     }
     fprintf(f, "\n");
     fprintf(f, "static void run_all(MemoryArena *arena) {\n");
     fprintf(f, "  DayInput day_input = {0};\n");
-    for (int day = 1; day <= MAX_DAY; ++day)
+    for (int day = MIN_DAY; day <= MAX_DAY; ++day)
     {
         fprintf(f, "  {\n");
         fprintf(f, "    memory_arena_reset(arena);\n");
