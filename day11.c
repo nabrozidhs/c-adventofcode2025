@@ -1,7 +1,7 @@
 #include "common/common.h"
 
 typedef struct {
-    HashMapString8 *device_ids_to_connected_device_ids;
+    HashMap *device_ids_to_connected_device_ids;
 } Day11_Parsed;
 
 internal Day11_Parsed day11_parse(MemoryArena *arena, DayInput *day_input)
@@ -16,7 +16,7 @@ internal Day11_Parsed day11_parse(MemoryArena *arena, DayInput *day_input)
         }
     }
 
-    result.device_ids_to_connected_device_ids = hash_map_string8_init(arena, sizeof(Buffer*), new_line_count * 3 / 2);
+    result.device_ids_to_connected_device_ids = hash_map_init(arena, 3, sizeof(Buffer*), new_line_count * 3 / 2);
     for (;;)
     {
         DayInputNextLine next_line = day_input_read_next_line(day_input);
@@ -37,12 +37,10 @@ internal Day11_Parsed day11_parse(MemoryArena *arena, DayInput *day_input)
             i += 4;
         }
 
-        hash_map_string8_set(result.device_ids_to_connected_device_ids, key, connected_device_ids);
+        hash_map_set(result.device_ids_to_connected_device_ids, key->str, connected_device_ids);
     }
 
-    String8 *k = memory_arena_push_struct(arena, String8);
-    *k = string8_from_c_string("out");
-    hash_map_string8_set(result.device_ids_to_connected_device_ids, k, buffer_init(arena, sizeof(String8), 0));
+    hash_map_set(result.device_ids_to_connected_device_ids, "out", buffer_init(arena, sizeof(String8), 0));
 
     return result;
 }
@@ -66,8 +64,7 @@ internal U64 day11_common(MemoryArena *arena, Day11_Parsed *parsed, String8 star
     {
         current_path = buffer_get(bfs, Day11_Path, bfs_read_index++);
 
-        Buffer *connected_device_ids = (Buffer*)hash_map_string8_get(parsed->device_ids_to_connected_device_ids,
-                                                                     &current_path.device_id)->value;
+        Buffer *connected_device_ids = hash_map_get(parsed->device_ids_to_connected_device_ids, current_path.device_id.str)->value;
         for (U64 i = 0; i < connected_device_ids->size; ++i)
         {
             String8 connected_device_id = buffer_get(connected_device_ids, String8, i);
