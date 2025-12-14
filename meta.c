@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define MIN_DAY 11
+#define MIN_DAY 1
 #define MAX_DAY 11
 
 int main(void)

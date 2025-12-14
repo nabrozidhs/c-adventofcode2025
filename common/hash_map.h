@@ -18,11 +18,15 @@ typedef struct {
 internal HashMap* hash_map_init(MemoryArena *arena, U64 key_size, U64 value_size, U64 capacity)
 {
     HashMap *result = memory_arena_push_struct(arena, HashMap);
-    result->data = memory_arena_push_array(arena, HashMapEntry, capacity);
     result->key_size = key_size;
     result->value_size = value_size;
     result->size = 0;
     result->capacity = capacity;
+    result->data = memory_arena_push_array(arena, HashMapEntry, capacity);
+    for (U64 i = 0; i < capacity; ++i)
+    {
+        result->data[i] = (HashMapEntry){0};
+    }
     return result;
 }
 
@@ -88,7 +92,7 @@ typedef HashMapEntry HashMapEntryString8;
 
 internal HashMapString8* hash_map_string8_init(MemoryArena *arena, U64 value_size, U64 capacity)
 {
-    HashMapString8 *result = hash_map_init(arena, sizeof(String8 *), value_size, capacity);
+    HashMapString8 *result = hash_map_init(arena, sizeof(String8), value_size, capacity);
     return result;
 }
 
