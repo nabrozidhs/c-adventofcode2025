@@ -119,7 +119,7 @@ internal void day11_part1(DAY_ARGS)
         string8_from_c_string((U8 *)"out"),
         day11_part1_condition
     );
-    printf("Part 1: %llu\n", sum);
+    printf("Part 1: %" PRIu64 "\n", sum);
 }
 
 internal B32 day11_part2_condition(Day11_Path path) { return (path.visited_nodes & 3) == 3; }
@@ -133,7 +133,7 @@ internal void day11_part2(DAY_ARGS)
         string8_from_c_string((U8 *)"out"),
         day11_part2_condition
     );
-    printf("Part 2: %llu\n", sum);
+    printf("Part 2: %" PRIu64 "\n", sum);
 }
 
 internal void day11(DAY_ARGS)

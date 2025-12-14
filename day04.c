@@ -86,7 +86,7 @@ internal void day04_part1(Day04_Find_Map_Size *map)
         }
     }
 
-    printf("Part 1: %llu\n", sum);
+    printf("Part 1: %" PRIu64 "\n", sum);
 }
 
 internal void day04_part2(Day04_Find_Map_Size *map)
@@ -120,7 +120,7 @@ internal void day04_part2(Day04_Find_Map_Size *map)
         }
     }
 
-    printf("Part 2: %llu\n", removed);
+    printf("Part 2: %" PRIu64 "\n", removed);
 }
 
 internal void day04(DAY_ARGS)

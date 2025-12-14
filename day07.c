@@ -83,7 +83,7 @@ internal void day07_part1(DAY_ARGS)
         }
     }
 
-    printf("Part 1: %llu\n", total_splits);
+    printf("Part 1: %" PRIu64 "\n", total_splits);
 }
 
 internal U64 find_timelines(Day07_Find_Map_Size *map, U64 *cache, Vector2i beam_position)
@@ -128,7 +128,7 @@ internal void day07_part2(DAY_ARGS)
 
     U64 total_timelines = find_timelines(&map, cache, start);
 
-    printf("Part 2: %llu\n", total_timelines);
+    printf("Part 2: %" PRIu64 "\n", total_timelines);
 }
 
 internal void day07(DAY_ARGS)

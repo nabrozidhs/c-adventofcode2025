@@ -178,13 +178,13 @@ internal U64 day10_common(MemoryArena *arena, DayInput *day_input, U32 (* f) (Me
 internal void day10_part1(DAY_ARGS)
 {
     U64 sum = day10_common(arena, day_input, day10_find_button_presses_for_light_mask);
-    printf("Part 1: %llu\n", sum);
+    printf("Part 1: %" PRIu64 "\n", sum);
 }
 
 internal void day10_part2(DAY_ARGS)
 {
     U64 sum = day10_common(arena, day_input, day10_find_button_presses_for_joltage);
-    printf("Part 2: %llu\n", sum);
+    printf("Part 2: %" PRIu64 "\n", sum);
 }
 
 internal void day10(DAY_ARGS)

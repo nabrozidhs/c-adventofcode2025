@@ -40,7 +40,7 @@ internal void day09_part1(DAY_ARGS)
         }
     }
 
-    printf("Part 1: %llu\n", largest);
+    printf("Part 1: %" PRIu64 "\n", largest);
 }
 
 typedef struct {
@@ -185,7 +185,7 @@ internal void day09_part2(DAY_ARGS)
         }
     }
 
-    printf("Part 2: %llu\n", result);
+    printf("Part 2: %" PRIu64 "\n", result);
 }
 
 internal void day09(DAY_ARGS)

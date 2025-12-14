@@ -147,7 +147,7 @@ internal void day08_part1(DAY_ARGS)
         }
     }
 
-    printf("Part 1: %llu\n", result);
+    printf("Part 1: %" PRIu64 "\n", result);
 }
 
 internal void day08_part2(DAY_ARGS)
@@ -189,7 +189,7 @@ internal void day08_part2(DAY_ARGS)
     }
 
     U64 result = (U64)buffer_get(positions, Vector3i, left_position_index).x * (U64)buffer_get(positions, Vector3i, right_position_index).x;
-    printf("Part 2: %llu\n", result);
+    printf("Part 2: %" PRIu64 "\n", result);
 }
 
 internal void day08(DAY_ARGS)

@@ -48,7 +48,7 @@ internal void day06_part1(DAY_ARGS)
         total += sum;
     }
 
-    printf("Part 1: %llu\n", total);
+    printf("Part 1: %" PRIu64 "\n", total);
 }
 
 internal void day06_part2(DAY_ARGS)
@@ -109,7 +109,7 @@ internal void day06_part2(DAY_ARGS)
         group_start = group_end;
     }
 
-    printf("Part 2: %llu\n", total);
+    printf("Part 2: %" PRIu64 "\n", total);
 }
 
 internal void day06(DAY_ARGS)
