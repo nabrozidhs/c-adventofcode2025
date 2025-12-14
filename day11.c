@@ -27,7 +27,7 @@ internal Day11_Parsed day11_parse(MemoryArena *arena, DayInput *day_input)
 
         String8 line = next_line.line;
         String8 *key = memory_arena_push_struct(arena, String8);
-        *key = string8_from_slice(line.str, 3);
+        *key = string8_from_bytes(line.str, 3);
         Buffer *connected_device_ids = buffer_init(arena, sizeof(String8), (line.size - 4) / 4);
 
         U64 i = 5;

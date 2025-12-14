@@ -1,7 +1,7 @@
 #ifndef STRING_H
 #define STRING_H
 
-static inline B32 char_is_digit(U8 c)
+internal inline B32 char_is_digit(U8 c)
 {
     return ((c >= '0') && (c <= '9'));
 }
@@ -11,23 +11,22 @@ typedef struct {
     U64 size;
 } String8;
 
-static inline String8 string8_from_c_string(char *c_string)
+internal inline String8 string8_from_c_string(const char *c_string)
 {
-    U64 size = 0;
-    while (c_string[size] != '\0')
-    {
-        ++size;
-    }
-
     String8 result = {
         .str = (U8 *)c_string,
-        .size = size
+        .size = 0,
     };
+
+    while (c_string[result.size])
+    {
+        ++result.size;
+    }
 
     return result;
 }
 
-static inline String8 string8_from_slice(U8 *slice, U64 size)
+internal inline String8 string8_from_bytes(U8 *slice, U64 size)
 {
     String8 result = {
         .str = slice,
@@ -36,7 +35,7 @@ static inline String8 string8_from_slice(U8 *slice, U64 size)
     return result;
 }
 
-static inline B32 string8_equals(String8 a, String8 b)
+internal inline B32 string8_equals(String8 a, String8 b)
 {
     if (a.size != b.size)
     {
