@@ -46,64 +46,112 @@ internal Day11_Parsed day11_parse(MemoryArena *arena, DayInput *day_input)
 }
 
 typedef struct {
-    String8 device_id;
-    U32 path_size;
-} Day11_Path;
+    U8 *from;
+    U8 *to;
+} Day11_Cache_Connection;
 
-internal U64 day11_common(MemoryArena *arena, Day11_Parsed *parsed, String8 start, String8 end)
+internal U64 day11_cache_hash(const void *key, U64 key_size)
 {
-    Day11_Path current_path = {0};
-    current_path.path_size = 1;
-    current_path.device_id = start;
-    Buffer *bfs = buffer_init(arena, sizeof(Day11_Path), 100000);
-    buffer_add(bfs, Day11_Path, current_path);
-
-    U64 bfs_read_index = 0;
-    U64 sum = 0;
-    while (bfs_read_index < bfs->size)
+    Day11_Cache_Connection *connection = (Day11_Cache_Connection*)key;
+    U64 h = 14695981039346656037ull;
+    for (U64 i = 0; i < 3; ++i)
     {
-        current_path = buffer_get(bfs, Day11_Path, bfs_read_index++);
+        h ^= connection->from[i];
+        h *= 1099511628211ull;
+    }
+    for (U64 i = 0; i < 3; ++i)
+    {
+        h ^= connection->to[i];
+        h *= 1099511628211ull;
+    }
+    return h;
+}
 
-        Buffer *connected_device_ids = hash_map_get(parsed->device_ids_to_connected_device_ids, current_path.device_id.str)->value;
-        for (U64 i = 0; i < connected_device_ids->size; ++i)
-        {
-            String8 connected_device_id = buffer_get(connected_device_ids, String8, i);
-            if (string8_equals(connected_device_id, end))
-            {
-                ++sum;
-                continue;
-            }
-            Day11_Path new_path = current_path;
-            new_path.path_size += 1;
-            if (new_path.path_size > parsed->device_ids_to_connected_device_ids->size)
-            {
-                continue;
-            }
+internal B32 day11_cache_eq(const void *a, const void *b, U64 key_size)
+{
+    Day11_Cache_Connection *connection_a = (Day11_Cache_Connection*)a;
+    Day11_Cache_Connection *connection_b = (Day11_Cache_Connection*)b;
+    if (common_memcmp(connection_a->from, connection_b->from, 3) != 0)
+    {
+        return false;
+    }
+    if (common_memcmp(connection_a->to, connection_b->to, 3) != 0)
+    {
+        return false;
+    }
+    return true;
+}
 
-            new_path.device_id = connected_device_id;
-            buffer_add(bfs, Day11_Path, new_path);
-        }
+internal inline HashMap* day11_init_cache(MemoryArena *arena)
+{
+    HashMapOptions options = {0};
+    options.hash_fn = day11_cache_hash;
+    options.eq_fn = day11_cache_eq;
+    HashMap *cache = hash_map_init_with_options(
+        arena,
+        sizeof(Day11_Cache_Connection),
+        sizeof(U64),
+        100000,
+        options
+    );
+    return cache;
+}
+
+internal U64 day11_common(MemoryArena *arena, Day11_Parsed *parsed, HashMap *cache, String8 start, String8 end)
+{
+    if (string8_equals(start, end))
+    {
+        return 1;
     }
 
-    return sum;
+    Day11_Cache_Connection lookup = {0};
+    lookup.from = start.str;
+    lookup.to = end.str;
+
+    HashMapEntry *cache_result = hash_map_get(cache, &lookup);
+    if (cache_result)
+    {
+        return *(U64 *)cache_result->value;
+    }
+
+    U64 total_paths = 0;
+
+    Buffer *connected_device_ids = hash_map_get(parsed->device_ids_to_connected_device_ids, start.str)->value;
+    for (U64 i = 0; i < connected_device_ids->size; ++i)
+    {
+        String8 connected_device_id = buffer_get(connected_device_ids, String8, i);
+        total_paths += day11_common(arena, parsed, cache, connected_device_id, end);
+    }
+
+    Day11_Cache_Connection *key = memory_arena_push_struct(arena, Day11_Cache_Connection);
+    key->from = start.str;
+    key->to = end.str;
+    U64 *value = memory_arena_alloc(arena, sizeof(U64));
+    *value = total_paths;
+    hash_map_set(cache, key, value);
+
+    return total_paths;
 }
 
 internal void day11_part1(DAY_ARGS)
 {
     Day11_Parsed parsed = day11_parse(arena, day_input);
-    U64 sum = day11_common(arena, &parsed, string8_from_c_string("you"), string8_from_c_string("out"));
+    HashMap *cache = day11_init_cache(arena);
+    U64 sum = day11_common(arena, &parsed, cache, string8_from_c_string("you"), string8_from_c_string("out"));
     printf("Part 1: %" PRIu64 "\n", sum);
 }
 
 internal void day11_part2(DAY_ARGS)
 {
     Day11_Parsed parsed = day11_parse(arena, day_input);
-    U64 sum = (day11_common(arena, &parsed, string8_from_c_string("svr"), string8_from_c_string("fft")) *
-            day11_common(arena, &parsed, string8_from_c_string("fft"), string8_from_c_string("dac")) *
-            day11_common(arena, &parsed, string8_from_c_string("dac"), string8_from_c_string("out"))) +
-        (day11_common(arena, &parsed, string8_from_c_string("svr"), string8_from_c_string("dac")) *
-            day11_common(arena, &parsed, string8_from_c_string("dac"), string8_from_c_string("fft")) *
-            day11_common(arena, &parsed, string8_from_c_string("fft"), string8_from_c_string("out")));
+    HashMap *cache = day11_init_cache(arena);
+
+    U64 sum = (day11_common(arena, &parsed, cache, string8_from_c_string("svr"), string8_from_c_string("fft")) *
+            day11_common(arena, &parsed, cache, string8_from_c_string("fft"), string8_from_c_string("dac")) *
+            day11_common(arena, &parsed, cache, string8_from_c_string("dac"), string8_from_c_string("out"))) +
+        (day11_common(arena, &parsed, cache, string8_from_c_string("svr"), string8_from_c_string("dac")) *
+            day11_common(arena, &parsed, cache, string8_from_c_string("dac"), string8_from_c_string("fft")) *
+            day11_common(arena, &parsed, cache, string8_from_c_string("fft"), string8_from_c_string("out")));
     printf("Part 2: %" PRIu64 "\n", sum);
 }
 
