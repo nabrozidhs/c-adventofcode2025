@@ -163,7 +163,7 @@ static inline DayInputNextLine day_input_read_next_line(DayInput *input)
 
     if (result.is_valid)
     {
-        result.line = string8_from_slice((input->content + start_position), (input->position - start_position));
+        result.line = string8_from_bytes((input->content + start_position), (input->position - start_position));
         if (input->position < input->size)
         {
             ++input->position;

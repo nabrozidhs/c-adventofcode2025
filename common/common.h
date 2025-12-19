@@ -21,6 +21,7 @@ typedef int32_t I32;
 typedef int64_t I64;
 
 #define I32_MAX INT32_MAX
+#define U32_MAX UINT32_MAX
 
 typedef float F32;
 typedef double F64;
